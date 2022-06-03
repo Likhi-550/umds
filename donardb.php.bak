@@ -1,0 +1,37 @@
+<?php 
+$servername = "localhost";
+$database = "register";
+$username = "root";
+$password = "";
+
+
+if($conn = mysqli_connect($servername, $username, $password, $database))
+{   
+	$fn=$_POST['fn'];
+	$ln=$_POST['ln'];
+	$em=$_POST['em'];
+    $psd=$_POST['psd'];
+	$gen=$_POST['gen'];
+	$ph=$_POST['ph'];
+	$bgp=$_POST['bgp'];
+	$dadd=$_POST['dadd'];
+    
+	$sql_query="INSERT INTO `donator`(`fn`, `ln`, `em`, `psd`, `gen`, `ph`, `bgp`, `dadd`) VALUES ('$fn','$ln','$em','$psd','$gen','$ph','$bgp','$dadd')";
+	if(mysqli_query($conn, $sql_query))
+	{
+		$to =$_POST['em'];
+$subject = 'Donar Registration';
+$content = 'Successfully Registerd as donar....Thank you...!;
+$headers = "From: Your-Email\r\n";
+mail($to, $subject, $content, $headers);
+		header("Location:logdonator.php");
+	}
+	else{
+		echo "not added" ;
+	}
+	mysqli_close($conn);
+}
+else{
+	echo "not connected todb";
+}
+?>
